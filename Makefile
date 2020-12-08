@@ -20,23 +20,6 @@ build-all-arches:
 	ARCH=arm $(MAKE) build
 	ARCH=arm64 $(MAKE) build
 
-# Target for travis to test new PRs
-test-all-arches:
-	ARCH=amd64 $(MAKE) test
-	ARCH=arm $(MAKE) test
-	ARCH=arm64 $(MAKE) test
-
-# Run and verify the service
-test: build
-	hzn dev service start -S
-	@echo 'Testing service...'
-	../../../tools/serviceTest.sh $(SERVICE_NAME) $(MATCH) $(TIME_OUT) && \
-		{ hzn dev service stop; \
-		echo "*** Service test succeeded! ***"; } || \
-		{ hzn dev service stop; \
-		echo "*** Service test failed! ***"; \
-		false ;}
-
 # Target for travis to publish service and pattern after PR is merged  
 publish: 
 	ARCH=amd64 $(MAKE) publish-service
@@ -46,9 +29,6 @@ publish:
 # Publish the service to the Horizon Exchange for the current architecture
 publish-service:
 	hzn exchange service publish -O -f horizon/service.definition.json
-
-# Build, run and verify, if test succeeds then publish (for the current architecture)
-#build-test-publish: build test publish-service
 
 # target for script - overwrite and pull insitead of push docker image
 publish-service-overwrite:
@@ -72,4 +52,4 @@ clean-all-archs:
 horizon/.hzn.json.tmp.mk: horizon/hzn.json
 	@ hzn util configconv -f $< | sed 's/=/?=/' > $@
 
-.PHONY: build build-all-arches test publish-service build-test-publish publish-all-arches clean clean-all-archs
+.PHONY: build build-all-arches publish-service publish-all-arches clean clean-all-archs
