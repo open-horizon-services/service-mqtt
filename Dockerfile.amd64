@@ -5,5 +5,10 @@ RUN apk update \
     && rm -fr /tmp/*
 
 COPY mqtt.sh /
+COPY mosquitto.conf /
 WORKDIR /
+RUN mkdir -p /etc/mosquitto/conf.d \
+    && chmod -R o+w /etc/mosquitto/conf.d/
+RUN mkdir -p /var/log/mosquitto \
+    && chmod -R o+w /var/log/mosquitto/
 CMD ["./mqtt.sh"]
