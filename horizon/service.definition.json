@@ -7,7 +7,20 @@
   "public": true,
   "sharable": "singleton",
   "requiredServices": [],
-  "userInput": [],
+  "userInput": [
+    {
+      "name": "MQTT_USERNAME",
+      "label": "The mqtt username",
+      "type": "string",
+      "defaultValue": "mqtt"
+    },
+    {
+      "name": "MQTT_PASSWORD",
+      "label": "The password for the provided mqtt user",
+      "type": "string",
+      "defaultValue": "password"
+    }
+  ],
   "deployment": {
     "services": {
       "$SERVICE_NAME": {

@@ -9,11 +9,19 @@ The MQTT Broker service provides an mqtt broker and publisher for inter-containe
 
 ### **API:** 
 ---
+#### Authentication:
+
+This service is configured to use password-based authentication. By default, the username is set to `mqtt` and the password is `password`. To customize these attributes, please set these environment variables.
+
+```
+export MQTT_USERNAME=<desired-username>
+export MQTT_PASSWORD=<desired-password>
+```
 
 #### Publishing:
 
 ```
-mosquitto_pub [-d] [-h host] [-p port] {-f file | -m message} [-t topic]
+mosquitto_pub [-d] [-h host] [-p port] {-f file | -m message} [-t topic] [-u username] [-P password]
 ```
 
 #### Parameters:
@@ -26,11 +34,13 @@ mosquitto_pub [-d] [-h host] [-p port] {-f file | -m message} [-t topic]
 | -f | send the contents of a file as the message | 
 | -m | message payload to send | 
 | -t | mqtt topic to publish to |
+| -u | mqtt username |
+| -P | mqtt password |
 
 #### Subscribing:
 
 ```
-mosquitto_sub [-h host] [-p port] [-t topic]
+mosquitto_sub [-h host] [-p port] [-t topic] [-u username] [-P password]
 ```
 
 #### Parameters:
@@ -40,6 +50,8 @@ mosquitto_sub [-h host] [-p port] [-t topic]
 | -h | host name |  
 | -p | subscribe on the specified port |
 | -t | mqtt topic to subscribe to |
+| -u | mqtt username |
+| -P | mqtt password |
 
 [mqtt-version-shield]: https://img.shields.io/badge/version-1.0.0-blue.svg
 [mqtt-amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
