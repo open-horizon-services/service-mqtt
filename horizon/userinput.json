@@ -1,0 +1,12 @@
+{
+    "services": [
+        {
+            "org": "$HZN_ORG_ID",
+            "url": "$SERVICE_NAME",
+            "variables": {
+                "MQTT_USERNAME": "$MQTT_USERNAME",
+                "MQTT_PASSWORD": "$MQTT_PASSWORD"
+            }
+        }
+    ]
+}

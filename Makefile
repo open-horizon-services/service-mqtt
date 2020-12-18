@@ -9,6 +9,7 @@ export ARCH ?= $(shell hzn architecture)
 # Configurable parameters passed to serviceTest.sh in "test" target
 export MATCH:='Starting mqtt broker...'
 export TIME_OUT:=60
+DOCKER_NAME := $(ARCH)_mqtt
 
 # Build the docker image for the current architecture
 build:
@@ -19,6 +20,17 @@ build-all-arches:
 	ARCH=amd64 $(MAKE) build
 	ARCH=arm $(MAKE) build
 	ARCH=arm64 $(MAKE) build
+
+# Run the docker image for the current architecture
+run:
+	-docker rm -f $(DOCKER_NAME) 2> /dev/null || :
+	docker run -e MQTT_USERNAME -e MQTT_PASSWORD -d --name $(DOCKER_NAME) $(DOCKER_IMAGE_BASE)_$(ARCH):$(SERVICE_VERSION)
+
+# Run the docker image for 3 architectures
+run-all-arches:
+	ARCH=amd64 $(MAKE) run
+	ARCH=arm $(MAKE) run
+	ARCH=arm64 $(MAKE) run
 
 # Target for travis to publish service and pattern after PR is merged  
 publish: 
